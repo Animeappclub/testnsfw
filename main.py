@@ -10,7 +10,7 @@ processor = ViTImageProcessor.from_pretrained('saltacc/anime-ai-detect')
 with torch.no_grad():
     inputs = processor(images=img, return_tensors="pt")
     outputs = model(**inputs)
-    print(output)
+    print(outputs)
     logits = outputs.logits
     print(logits)
 
