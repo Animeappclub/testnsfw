@@ -5,8 +5,8 @@ from PIL import Image
 from transformers import AutoModelForImageClassification, ViTImageProcessor
 
 img = Image.open("image (1).png")
-model = AutoModelForImageClassification.from_pretrained("saltacc/anime-ai-detect")
-processor = ViTImageProcessor.from_pretrained('saltacc/anime-ai-detect')
+model = AutoModelForImageClassification.from_pretrained("CompVis/stable-diffusion-safety-checker")
+processor = ViTImageProcessor.from_pretrained("CompVis/stable-diffusion-safety-checker")
 with torch.no_grad():
     inputs = processor(images=img, return_tensors="pt")
     outputs = model(**inputs)
