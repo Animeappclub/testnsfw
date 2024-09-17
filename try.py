@@ -14,19 +14,14 @@ def merge_weights(base_model, other_model, merge_weight=1.0):
     merged_model: The resultant model after merging weights.
     """
     merged_model = base_model.copy()  # Preserve base model structure
-    
-    # Iterate through each layer and merge weights
-    for layer in range(len(base_model['layers'])):
-        base_layer = base_model['layers'][layer]
-        other_layer = other_model['layers'][layer]
-        
-        # Merging layer weights (e.g., 'key', 'value', 'bias', etc.)
-        for param in base_layer:
-            if param in other_layer:  # If the parameter exists in the other_model
-                # Merge the weights
-                merged_model['layers'][layer][param] = (
-                    (1 - merge_weight) * base_layer[param] + merge_weight * other_layer[param]
-                )
+
+    # Iterate through the base model's state_dict keys and merge weights
+    for param_name, base_param in base_model.items():
+        if param_name in other_model:
+            other_param = other_model[param_name]
+            # Merging weights
+            merged_param = (1 - merge_weight) * base_param + merge_weight * other_param
+            merged_model[param_name] = merged_param
     
     return merged_model
 
