@@ -1,4 +1,4 @@
-from helpers.file_utils import load_model, save_model
+from safetensors.torch import load_file, save_file
 
 def merge_weights(base_model, other_model, merge_weight=1.0):
     """
@@ -35,15 +35,15 @@ def main():
 
     args = parser.parse_args()
 
-    # Load models
-    base_model = load_model(args.base_model)
-    other_model = load_model(args.other_model)
+    # Load the models using safetensors
+    base_model = load_file(args.base_model)
+    other_model = load_file(args.other_model)
 
     # Perform the merging operation
     merged_model = merge_weights(base_model, other_model, args.merge_weight)
 
     # Save the merged model
-    save_model(merged_model, args.output)
+    save_file(merged_model, args.output)
 
 if __name__ == "__main__":
     main()
